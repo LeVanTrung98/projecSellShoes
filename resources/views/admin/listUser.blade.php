@@ -17,29 +17,18 @@
 
 @section('content')
 <div class="breadcrumbs d-flex align-items-center">
-            <div class="col-sm-4">
+            <div class="col-sm-9">
                 <div class="page-header float-left">
                     <div class="page-title">
                         <h1>List User</h1>
                     </div>
                 </div>
             </div>
-			<div class="col-sm-4">
-				<div class="row">
-					<div class="container">
-						<form>
-							@csrf
-							<input type="text" class="rounded-pill" name="name" id="search">
-							<input type="button" name="submit" value="Tìm">
-						</form>
-					</div>
-				</div>
-			</div>
             <div class="col-sm-3">
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                        	<li class="active "><a href="" data-toggle="modal" data-target="#myModal" id="add" class="btn btn-success">Add User</a></li>	
+                        	<li class="active "><a href="" data-toggle="modal" data-target="#myModal" id="addUser" class="btn btn-success">Add User</a></li>	
                         </ol>
                     </div>
                 </div>
@@ -91,7 +80,6 @@
 					<div class="row">
 						<div class="container "><h4 class="modal-title">Create Brand</h4></div>
 					</div>
-						
 						<div class="row notificationE">
 							<div class="container-fluid">
 								<div class="alert alert-danger mess"></div>
@@ -105,26 +93,24 @@
 				<form method="post" id ="addProduct">
 					@csrf
 					<fieldset class="form-group">
-						<label for="formGroupExampleInput">Product Name<small>*</small></label>
-						<input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Product Name...">
+						<label for="formGroupExampleInput">Name<small>*</small></label>
+						<input type="text" name="name" class="form-control" id="formGroupExampleInput" placeholder="Name...">
 					</fieldset>
 					<fieldset class="form-group">
-						<label for="formGroupExampleInput1">Status</label>
-						<input type="text" name="status" class="form-control" id="formGroupExampleInput1" placeholder="Status...">
+						<label for="formGroupExampleInput1">Email</label>
+						<input type="email" name="email" class="form-control" id="formGroupExampleInput1" placeholder="Email...">
 					</fieldset>
 					<fieldset class="form-group">
-						<label for="formGroupExampleInput2">Price<small>*</small></label>
-						<input type="number" step="0.001" min="0" name="price" class="form-control" id="formGroupExampleInput2" placeholder="Price...">
+						<label for="formGroupExampleInput2">Password<small>*</small></label>
+						<input type="password" name="password" class="form-control" id="formGroupExampleInput2" placeholder="Password...">
 					</fieldset>
 					<fieldset class="form-group">
-						<label for="formGroupExampleInput2">Quantity<small>*</small></label>
-						<input type="number" name="quantity" min="0" class="form-control" id="formGroupExampleInput2" placeholder="Quantity...">
+						<label for="formGroupExampleInput2">role<small>*</small></label>
+						<select name="role_id"  class="form-control" >
+							<option value="1">user</option>
+							<option value="2">admin</option>
+						</select>
 					</fieldset>
-					<fieldset class="form-group">
-						<label >Description<small>*</small></label>
-						<textarea name="description" id="descripton" class="form-control" placeholder="Description..."></textarea>
-					</fieldset>
-				
 				</form>
 			</div>
 			<div class="modal-footer">

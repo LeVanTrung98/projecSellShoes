@@ -10,6 +10,7 @@ $(document).ready(function(){
 
 	$('.notification').hide();
 
+	// start add category
 	$('#save').click(function(e){
 		e.preventDefault();
 		$('.notification').show();
@@ -34,14 +35,11 @@ $(document).ready(function(){
 			error:function(error){
 				$('.mess').html("ERROR!!!");
 			}
-
-
 		})
 		.done(function(){
 			$("#table_Cate").load(' #table_Cate');
 			$("#pageAdd").load(" #pageAdd");
 		});
-
 	});  
 	// end add
 
@@ -67,9 +65,6 @@ $(document).ready(function(){
 				}
 			});
 		}
-
-
-
 	});
 
 		// start edit category
@@ -77,9 +72,7 @@ $(document).ready(function(){
 			var id = $(this).attr("data-id");
 			console.log(id);
 			var name = $(this).attr("data-name");
-
 			$('input[name="name"]').val(name);
-
 			$('#save_Edit_Cate').on("click", function(){
 				$.ajax({
 					url:'/admin/category/'+id,
@@ -100,11 +93,9 @@ $(document).ready(function(){
 						$("#table_Cate").load(' #table_Cate');
 					}
 				});
-
 		});
 
 	});
-
 
 });
 

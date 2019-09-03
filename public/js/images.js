@@ -10,38 +10,33 @@ $(document).ready(function(){
 
 	$('.notification').hide();
 
+	// start add image
 	$('#save').click(function(e){
-		// e.preventDefault();
-		// console.log('alo');
-		
+		e.preventDefault();
+		var name = $('#formImage input[name="name"]').val();
+		var product_id = $('#formImage select[name="product_id"]').val();
+		var img = $('#image')[0].files[0];
+		var data_form = new FormData();
+		data_form.append('name',name);
+		data_form.append('image',img);
+		data_form.append('product_id',product_id);
 		$.ajax({
 			url:'/admin/image',
 			type:"POST",
-			dataType:'json',
-			data:{
-				'name':$('#formImage input[name="name"]').val(),
-				'image':$('#formImage input[name="image"]').val(),
-				'product_id':$('#formImage select[name="name"]').val()
-			},
+			data:data_form,
+			contentType : false,
+            processData : false,
 			success:function(data){
 				console.log(data);
-				// if(data != undefined && data.errors !=undefined ){
-				// 	$.each(data['errors'], function(key, value){
-				// 		$('.notificationE').show();
-				// 		$('.notificationS').hide();
-				// 		$('.messE').append(value);
-				// 	});
-				// }
-				// if(data != undefined && data.datasuccess != undefined){
-				// 	$.each(data['datasuccess'], function(key, value){
-				// 		$('.notificationS').show();
-				// 		$('.notificationE').hide();
-				// 		$('.messS').append(value);
-				// 	});
-				// }
-				
-			
-
+				if(data != undefined && data.errors !=undefined ){
+					$.each(data['errors'], function(key, value){
+						$('.notification').show();
+						$('.mess').append(value+'<br>');
+					});
+				}
+				else{
+					alert(data.dataSuccess)
+				}
 				$("#table_Cate").load(' #table_Cate');
 				$("#pageAdd").load(" #pageAdd");
 			},
@@ -55,7 +50,7 @@ $(document).ready(function(){
 	// end add
 
 
-
+	// start delete
 	$(document).on('click', '.delete_Cate',function(e){
 		e.preventDefault();
 		var curent =$(this);
@@ -63,15 +58,12 @@ $(document).ready(function(){
 		if(confirm("Bạn có muốn xóa?")){
 			var id=curent.attr("data-id");
 			$.ajax({
-				url:'/admin/size/'+id,
+				url:'/admin/image/'+id,
 				type: 'DELETE',
 				dataType:'json',
-				data:{},
 				success:function(data){
-					var mess = data['message'];
-					alert(mess);
+					alert(data.dataSuccess);
 					$("#table_Cate").load(" #table_Cate");
-					
 					$("#pageAdd").load(" #pageAdd");
 				},
 				error:function(error){
@@ -86,56 +78,54 @@ $(document).ready(function(){
 	// end delete
 	
 
-
+	// start update image
 		$(document).on('click','.edit_Cate' ,function(){
 			var id = $(this).attr("data-id");
 			var name = $(this).attr("data-name");
 			$('.notification').hide();
-			$('input[name="name"]').val(name);
+
+			$.ajax({
+				url:'/admin/image/show/'+id,
+				type:'GET',
+				dataType:'json',
+				data:{
+				},
+				success:function(data){
+					$('#editImage input[name="name"]').val(data.name);
+					$('#editImage select[name="product_id"]').val(data.product_id);
+				}
+
+			});
 
 			$('#save_Edit_Cate').on("click", function(){
-			// var form_data = $(this).serialize();
-			// console.log(form_data);
+				var name = $('#editImage input[name="name"]').val();
+				var product_id = $('#editImage select[name="product_id"]').val();
+				var img = $('#img')[0].files[0];
+				var data_form1 = new FormData();
+				data_form1.append('name',name);
+				data_form1.append('image',img);
+				data_form1.append('product_id',product_id);
 				$.ajax({
-					url:'/admin/size/'+id,
-					type:'PUT',
-					dataType:'json',
-					data:{
-						'name': $('#ediCate').val(),
-					},
+					url:'/admin/image/upload/'+id,
+					type:'POST',
+					processData:false,
+					contentType:false,
+					data:data_form1,
 					success:function(data){
 						console.log(data);
 						if(data != undefined && data.errors !=undefined){
 							$.each(data['errors'],function(key, value){
 								console.log(value)
-								$('.notificationE').show();
-								$('.notificationS').hide();
-								$('.messE').append(value);
+								$('.notification').show();
+								$('.mess').append(value+'<br>');
 							});
+						}else{
+							alert(data.dataSuccess);
 						}
-						if(data != undefined && data.datasuccess !=undefined){
-							$.each(data['datasuccess'],function(key, value){
-								$('.notificationS').show();
-								$('.notificationE').hide();
-								$('.messS').append(value);
-							});
-							$("#table_Cate").load(' #table_Cate');
-						}
-						
 					}
 				});
-
 		});
-
-		$("#close_Edit").on("click", function(){
-			id=null;
-		});
-
 
 	});
-
-
-	
-
 });
 

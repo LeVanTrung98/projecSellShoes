@@ -10,7 +10,9 @@ $(document).ready(function(){
 
 	$('.notification').hide();
 
+	// start add brands
 	$('#save').click(function(e){
+		$('.mess').html('');
 		e.preventDefault();
 		console.log('alo');
 		$('.notification').show();
@@ -26,10 +28,11 @@ $(document).ready(function(){
 				if(data !=undefined && data.errors !=undefined){
 					$.each(data.errors,function(key,value){
 						$('.notification').show();
-						$('.mess').append(value);
+						$('.mess').append(value+'</br>');
 					});
 				}
 				else{
+					$('.notification').hide();
 					alert(data['success']);
 				}
 				$("#brandCreate").load(' #brandCreate');
@@ -38,7 +41,6 @@ $(document).ready(function(){
 			error:function(error){
 				$('.mess').html("ERROR!!!");
 			}
-
 
 		});
 
@@ -69,16 +71,11 @@ $(document).ready(function(){
 							alert(data['success']);
 						}
 						$("#brandCreate").load(' #brandCreate');
-						// location.reload()
 					}
 				});
-
 		});
 
 	});
-
-
-	
 
 });
 
@@ -98,6 +95,7 @@ $(document).ready(function(){
 
 	$('.notification').hide();
 
+	// start delete brands
 	$(document).on('click','.delete_Cate',function(e){
 		e.preventDefault();
 		console.log('alo');
